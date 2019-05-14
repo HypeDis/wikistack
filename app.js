@@ -6,18 +6,17 @@ const app = express();
 // import db and models
 const { db, Page, User } = require('./models/index.js');
 
-//routes
-const wikiRouter = require('./routes/wikiRoutes');
-const userRouter = require('./routes/userRoutes.js');
-
-app.use('/wiki', wikiRouter);
-app.use('/user', userRouter);
-
 // middleware
 app.use(morgan('combined'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static('public'));
+
+//routes
+const wikiRouter = require('./routes/wikiRoutes');
+const userRouter = require('./routes/userRoutes.js');
+app.use('/wiki', wikiRouter);
+app.use('/user', userRouter);
 
 const PORT = 3000;
 
