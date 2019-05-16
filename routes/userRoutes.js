@@ -45,6 +45,7 @@ router.get('/:id', async (req, res) => {
 
   // new code running parallel promises using promise.all
   Promise.all([
+    // findById is not a function in sequelize. use findByPk (primary key) instead
     User.findByPk(numericalId),
     Page.findAll({
       where: {
