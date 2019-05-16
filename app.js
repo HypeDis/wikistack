@@ -16,7 +16,7 @@ app.use(express.static('public'));
 const wikiRouter = require('./routes/wikiRoutes');
 const userRouter = require('./routes/userRoutes.js');
 app.use('/wiki', wikiRouter);
-app.use('/user', userRouter);
+app.use('/users', userRouter);
 
 const PORT = 3000;
 
