@@ -67,6 +67,9 @@ router.post('/', async (req, res) => {
 
         // using promise.all to avoid nesting promises
         // savedPage is not a promise so it will just be returned as is.
+
+        // since promise.all is called inside a .then block
+        // we have to return it so we can use it in the next .then block.
         return Promise.all([savedPage, savedPage.setAuthor(user)]);
 
         // old code with nested promises
@@ -101,7 +104,7 @@ router.get('/add', (req, res) => {
 // @ROUTE: get to /wiki/:slug
 // @DESC: find and display a page by its slug
 router.get('/:slug', async (req, res) => {
-  // will not work properly if their are multiple pages with the same title
+  // note: it will just grab the first page it finds with that title regardless of who the author is
   try {
     const page = await Page.findOne({
       where: { slug: req.params.slug },
