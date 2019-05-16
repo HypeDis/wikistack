@@ -1,5 +1,6 @@
 const html = require('html-template-tag');
 const layout = require('./layout');
+const wikiPage = require('./wikipage');
 
 module.exports = pages =>
   layout(html`
@@ -13,6 +14,11 @@ module.exports = pages =>
     <ul class="list-unstyled">
       <ul>
         <!-- PLACEHOLDER LIST OF PAGES -->
+        $${pages
+          .map(page => {
+            return ` <li> ${wikiPage(page, page.author)} </li>`;
+          })
+          .join('')}
       </ul>
     </ul>
   `);
