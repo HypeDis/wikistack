@@ -65,12 +65,10 @@ router.post('/', async (req, res) => {
       .then(savedPage => {
         // after saving the new page in to the db, we set an association to the user from above.
 
-        // using promise.all to avoid nesting promises
-        // savedPage is not a promise so it will just be returned as is.
-
-        // since promise.all is called inside a .then block
-        // we have to return it so we can use it in the next .then block.
-        return Promise.all([savedPage, savedPage.setAuthor(user)]);
+        // setAuthor returns a promise,
+        // we return that promise in the then block
+        // to send it to the next then block
+        return savedPage.setAuthor(user);
 
         // old code with nested promises
         /*
@@ -84,7 +82,7 @@ router.post('/', async (req, res) => {
          */
       })
       // new code with promise chaining
-      .then(([savedPage, _]) => {
+      .then(savedPage => {
         res.redirect(`/wiki/${savedPage.slug}`);
       })
       .catch(e => {
